@@ -1,0 +1,56 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: echo-hello-world
+spec:
+  steps:
+    - name: echo
+      image: ubuntu
+      script: |
+        #!/bin/bash
+        echo "Current user is"
+        whoami
+        ls -l
+        echo "creating a file in the workspace"
+        touch /workspace/workspace_folder/test.txt
+      securityContext:
+         runAsUser: 0
+  workspaces:
+  - name: task-workspace
+    description: |
+      The folder where we write the message to. If no workspace
+      is provided then the message will not be written.
+    mountPath: /workspace/workspace_folder
+---
+
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: echo-pipeline
+spec:
+  workspaces:
+    - name: pipeline-workspace
+  tasks:
+    - name: echo-task
+      taskRef:
+        name: echo-hello-world
+      workspaces:
+        - name: task-workspace
+          workspace: pipeline-workspace
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: echo-pipelinerun-6
+spec:
+  pipelineRef:
+    name: echo-pipeline
+  workspaces:
+    - name: pipeline-workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
