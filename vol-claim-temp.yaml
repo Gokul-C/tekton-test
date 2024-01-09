@@ -1,26 +1,30 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: echo-hello-world
 spec:
+  workspaces:
+    - name: task-workspace
+      description: |
+        The folder where we write the message to. If no workspace
+        is provided then the message will not be written.
+      mountPath: /workspace/workspace_folder
   steps:
     - name: echo
       image: ubuntu
-      script: |
-        #!/bin/bash
-        echo "Current user is"
-        whoami
-        ls -l
-        echo "creating a file in the workspace"
-        touch /workspace/workspace_folder/test.txt
+      command:
+        - "/bin/bash"
+        - "-c"
+      args:
+        - |
+          echo "Current user is"
+          whoami
+          ls -l
+          echo "creating a file in the workspace"
+          touch /workspace/workspace_folder/test.txt
+          ls
       securityContext:
-         runAsUser: 0
-  workspaces:
-  - name: task-workspace
-    description: |
-      The folder where we write the message to. If no workspace
-      is provided then the message will not be written.
-    mountPath: /workspace/workspace_folder
+        runAsUser: 0
 ---
 
 apiVersion: tekton.dev/v1beta1
