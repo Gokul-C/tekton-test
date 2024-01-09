@@ -11,7 +11,6 @@ spec:
       image: alpine:3.12.1
       securityContext:
         runAsUser: 0
-        #fsGroup: 0
         runAsGroup: 0
       command: ["/bin/sh"]
       args:
@@ -35,7 +34,6 @@ spec:
       image: alpine:3.12.1
       securityContext:
         runAsUser: 0
-        #fsGroup: 0
         runAsGroup: 0
       command: ["/bin/sh"]
       args:
