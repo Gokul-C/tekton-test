@@ -14,8 +14,8 @@ spec:
         - "/bin/sh"
         - "-c"
         - |
-          echo 'Hello, World!' > /data/file1.txt &&
-          echo 'This is a test.' > /data/file2.txt &&
+          echo 'Hello, World!' > /tmp/file1.txt &&
+          echo 'This is a test.' > /tmp/file2.txt &&
           sleep 3600  # Sleep for 1 hour (adjust as needed)
       volumeMounts:
         - mountPath: "/tmp"
