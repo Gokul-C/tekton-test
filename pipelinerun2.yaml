@@ -6,7 +6,7 @@ spec:
   workspaces:
     - name: pipeline-ws
       persistentVolumeClaim:
-        claimName: nfs-pvc-volume
+        claimName: my-pvc
   pipelineRef:
     name: workspace-pipeline-ref
 
