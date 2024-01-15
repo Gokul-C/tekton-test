@@ -6,7 +6,7 @@ spec:
   workspaces:
     - name: pipeline-ws
       persistentVolumeClaim:
-        claimName: tekton-tutorial-sources
+        claimName: example-local-claim
   pipelineRef:
     name: workspace-pipeline-ref
 
