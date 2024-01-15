@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: pipeline-run
+  name: pipeline-cb-run
 spec:
   workspaces:
     - name: pipeline-ws
